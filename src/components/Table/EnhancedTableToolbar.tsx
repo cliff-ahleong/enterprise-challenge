@@ -24,6 +24,7 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     setQuery(value);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedChangeHandler = React.useCallback(
     _.debounce(handleChange, 1000),
     []
