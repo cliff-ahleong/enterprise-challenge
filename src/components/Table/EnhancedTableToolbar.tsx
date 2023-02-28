@@ -65,9 +65,10 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       <TextField
         size="small"
-        sx={{ bgcolor: "white" }}
+        sx={{ bgcolor: "white", mr: 2 }}
         onChange={debouncedChangeHandler}
         defaultValue={query}
+        placeholder="Search..."
       />
       {numSelected > 0 ? (
         <Tooltip title="Delete">

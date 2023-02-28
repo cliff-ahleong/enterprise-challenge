@@ -17,31 +17,38 @@ function App() {
 
   console.log(query);
 
-  if (isLoading) {
-    return <div>Data is loading...</div>;
-  }
-
   if (error) {
     return <div> Unexpected error... </div>;
   }
 
   if (!data) {
-    return <div>No data</div>;
-  }
-
-  return (
-    <div>
+    return (
       <EnhancedTable
         pageNumber={pageNumber}
         pageSize={pageSize}
-        data={data.data}
+        data={[]}
         setPageSize={setPageSize}
         setPageNumber={setPageNumber}
-        totalCount={data.totalCount}
+        totalCount={0}
         setQuery={setQuery}
         query={query}
+        isLoading={isLoading}
       />
-    </div>
+    );
+  }
+
+  return (
+    <EnhancedTable
+      pageNumber={pageNumber}
+      pageSize={pageSize}
+      data={data.data}
+      setPageSize={setPageSize}
+      setPageNumber={setPageNumber}
+      totalCount={data.totalCount}
+      setQuery={setQuery}
+      query={query}
+      isLoading={isLoading}
+    />
   );
 }
 

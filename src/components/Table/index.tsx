@@ -1,13 +1,16 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  Box,
+  Checkbox,
+  CircularProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
 
 import { IResult, Order } from "src/model/model";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
@@ -21,6 +24,7 @@ interface IEnhancedTableProps {
   data: IResult[];
   totalCount: number;
   query: string;
+  isLoading: boolean;
   setPageSize: (page: number) => void;
   setPageNumber: (page: number) => void;
   setQuery: (query: string) => void;
@@ -32,6 +36,7 @@ export const EnhancedTable: React.FC<IEnhancedTableProps> = ({
   data,
   totalCount,
   query,
+  isLoading,
   setPageSize,
   setPageNumber,
   setQuery,
@@ -116,7 +121,7 @@ export const EnhancedTable: React.FC<IEnhancedTableProps> = ({
               onRequestSort={handleRequestSort}
               rowCount={data.length}
             />
-            <TableBody>
+            <TableBody sx={{ position: "relative" }}>
               {stableSort(data, getComparator(order, orderBy)).map(
                 (row, index) => {
                   const isItemSelected = isSelected(row.title);
@@ -159,10 +164,23 @@ export const EnhancedTable: React.FC<IEnhancedTableProps> = ({
               {data.length < pageSize && (
                 <TableRow
                   style={{
-                    height: 53 * (pageSize - data.length),
+                    height: 40 * (pageSize - data.length),
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  {!!isLoading ? (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    >
+                      <CircularProgress />
+                    </Box>
+                  ) : (
+                    <TableCell colSpan={6} />
+                  )}
                 </TableRow>
               )}
             </TableBody>
